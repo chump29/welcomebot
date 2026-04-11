@@ -15,10 +15,13 @@ const create = (): RESTPostAPIChatInputApplicationCommandsJSONBody => {
 
 const embed: EmbedBuilder = new EmbedBuilder()
   .setColor(0x78866b)
-  .setTitle(`WelcomeBot v${Bun.env.npm_package_version}`)
+  .setAuthor({
+    iconURL: Bun.env.LOGO_URL,
+    name: `WelcomeBot v${Bun.env.npm_package_version}`
+  })
   .setDescription("- Welcomes new users to the server")
   .setFooter({
-    text: "Chris Post"
+    text: "By Chris Post"
   });
 
 const invoke = async (interaction: ChatInputCommandInteraction): Promise<void> => {

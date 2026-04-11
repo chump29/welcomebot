@@ -1,7 +1,7 @@
 import { type ChatInputCommandInteraction, MessageFlags, type User } from "discord.js";
 import { RateLimiter } from "discord.js-rate-limiter";
 
-const rateLimiter = new RateLimiter(1, Number(Bun.env.RATE));
+const rateLimiter = new RateLimiter(1, Number(Bun.env.RATE ?? 1000));
 
 const checkRate = async (interaction: ChatInputCommandInteraction, user: User | null = null): Promise<boolean> => {
   const u = user ?? interaction.user;
