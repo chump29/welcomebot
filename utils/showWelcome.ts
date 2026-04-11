@@ -2,7 +2,7 @@ import { type Channel, type Client, EmbedBuilder, type Message, type TextChannel
 
 import { error, info } from "./logger.ts";
 
-const showWelcome = async (client: Client | null, user: User): Promise<void> => {
+const showWelcome = async (client: Client | null, user: User, name: string): Promise<void> => {
   if (!client) {
     throw new Error("Invalid client");
   }
@@ -21,10 +21,8 @@ const showWelcome = async (client: Client | null, user: User): Promise<void> => 
               iconURL: user.displayAvatarURL(),
               name: user.displayName
             })
-            .setThumbnail(
-              "https://cdn.discordapp.com/app-icons/1491949693910122546/327c9ef3ce16d645133c5d4e77f44c42.png?size=256"
-            )
-            .setTitle(`**-=- Welcome to ${Bun.env.SERVER_NAME}! -=-**`)
+            .setThumbnail(Bun.env.LOGO_URL)
+            .setTitle(`**✨ Welcome to ${name}! ✨**`)
             .setImage(Bun.env.WELCOME_IMAGE_URL)
             .addFields(
               {

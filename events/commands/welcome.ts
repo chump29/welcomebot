@@ -6,6 +6,7 @@ import {
   type SlashCommandUserOption
 } from "discord.js";
 
+import { checkRate } from "../../utils/checkRate.ts";
 import { error } from "../../utils/logger.ts";
 import { showWelcome } from "../../utils/showWelcome.ts";
 
@@ -26,7 +27,11 @@ const invoke = async (interaction: ChatInputCommandInteraction): Promise<void> =
     throw new Error("Invalid user");
   }
 
-  await showWelcome(interaction.channel?.client ?? null, user)
+  if (await checkRate(interaction, user)) {
+    return;
+  }
+
+  await showWelcome(interaction.channel?.client ?? null, user, interaction.guild?.name as string)
     .then(async (): Promise<void> => {
       await interaction
         .reply({

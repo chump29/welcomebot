@@ -6,6 +6,7 @@ import {
   SlashCommandBuilder
 } from "discord.js";
 
+import { checkRate } from "../../utils/checkRate.ts";
 import { error } from "../../utils/logger.ts";
 
 const create = (): RESTPostAPIChatInputApplicationCommandsJSONBody => {
@@ -21,6 +22,10 @@ const embed: EmbedBuilder = new EmbedBuilder()
   });
 
 const invoke = async (interaction: ChatInputCommandInteraction): Promise<void> => {
+  if (await checkRate(interaction)) {
+    return;
+  }
+
   await interaction
     .reply({
       flags: MessageFlags.Ephemeral,
