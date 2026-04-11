@@ -2,5 +2,5 @@
 
 - [ ] CSV with different welcome messages
 - [ ] Create README
-- [ ] Docker contianer build
+- [ ] Docker container build
 - [ ] CI/CD
