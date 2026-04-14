@@ -12,7 +12,7 @@ import { showWelcome } from "../../utils/showWelcome.ts"
 
 const create = (): RESTPostAPIChatInputApplicationCommandsJSONBody => {
   return new SlashCommandBuilder()
-    .setName("welcome")
+    .setName(import.meta.file.slice(0, -3))
     .setDescription("Send welcome message")
     .addUserOption(
       (option: SlashCommandUserOption): SlashCommandUserOption =>

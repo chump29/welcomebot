@@ -16,7 +16,7 @@ const showWelcome = async (client: Client | null, user: User, name: string): Pro
       .send({
         embeds: [
           new EmbedBuilder()
-            .setColor(0x78866b)
+            .setColor("#78866b")
             .setAuthor({
               iconURL: user.displayAvatarURL(),
               name: user.displayName
@@ -37,8 +37,9 @@ const showWelcome = async (client: Client | null, user: User, name: string): Pro
             )
             .setFooter({
               iconURL: Bun.env.LOGO_URL,
-              text: `WelcomeBot v${Bun.env.npm_package_version}`
+              text: `${Bun.env.NAME} v${Bun.env.npm_package_version}`
             })
+            .setTimestamp()
             .toJSON()
         ]
       })

@@ -1,6 +1,6 @@
 import { type Client } from "discord.js"
 
-import loadCommands from "./events/loadCommands.ts"
+import { loadCommands } from "./events/loadCommands.ts"
 import botClient from "./utils/botClient.ts"
 import { info } from "./utils/logger.ts"
 import { logo } from "./utils/logo.ts"
