@@ -4,8 +4,17 @@ import { info } from "./logger.ts"
 import { SERVER } from "./logo.ts"
 import { showWelcome } from "./showWelcome.ts"
 
+let CLIENT: Client | null = null
+
+const shutdown = async (): Promise<void> => {
+  info("Shutting down...")
+  await CLIENT?.destroy()
+    .then(async (): Promise<void> => await SERVER?.stop(true))
+    .then((): void => process.exit())
+}
+
 const client = async (): Promise<Client> => {
-  const client: Client = new Client({
+  CLIENT = new Client({
     intents: [
       GatewayIntentBits.Guilds
     ],
@@ -19,17 +28,9 @@ const client = async (): Promise<Client> => {
     }
   })
 
-  client.on(Events.GuildMemberAdd, (member: GuildMember): void => {
+  CLIENT.on(Events.GuildMemberAdd, (member: GuildMember): void => {
     showWelcome(member.client, member.user, member.guild.name)
   })
-
-  const shutdown = async (): Promise<void> => {
-    info("Shutting down...")
-    await client
-      .destroy()
-      .then(async (): Promise<void> => await SERVER?.stop(true))
-      .then((): void => process.exit())
-  }
 
   process.on("SIGINT", async (): Promise<void> => {
     await shutdown()
@@ -39,15 +40,19 @@ const client = async (): Promise<Client> => {
     await shutdown()
   })
 
-  return client
+  return CLIENT
 }
 
-const login = async (client: Client): Promise<void> => {
-  await client.login(Bun.env.TOKEN)
+const login = async (): Promise<void> => {
+  if (!CLIENT) {
+    throw new Error("Invalid client")
+  }
 
-  if (client.user && Bun.env.DEBUG) {
-    info(`Connected as ${client.user.displayName} (${client.user.tag})`)
+  await CLIENT.login(Bun.env.TOKEN)
+
+  if (CLIENT.user && Bun.env.DEBUG) {
+    info(`Connected as ${CLIENT.user.displayName} (${CLIENT.user.tag})`)
   }
 }
 
-export { client, login }
+export { client, login, shutdown }
