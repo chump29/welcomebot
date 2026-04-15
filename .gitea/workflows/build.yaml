@@ -87,13 +87,3 @@ jobs:
 
       - name: Push manifest
         run: docker manifest push git.postfmly.com/admin/welcomebot:latest
-
-      - name: Create backend manifest
-        run: |
-          docker manifest create \
-            git.postfmly.com/admin/planrr-backend:latest \
-            git.postfmly.com/admin/planrr-backend:amd64 \
-            git.postfmly.com/admin/planrr-backend:arm64
-
-      - name: Push backend manifest
-        run: docker manifest push git.postfmly.com/admin/planrr-backend:latest
