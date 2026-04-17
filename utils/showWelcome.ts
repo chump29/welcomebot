@@ -1,4 +1,12 @@
-import { type Channel, type Client, EmbedBuilder, type Message, type TextChannel, type User } from "discord.js"
+import {
+  type Channel,
+  type Client,
+  EmbedBuilder,
+  type Message,
+  type TextChannel,
+  type User,
+  userMention
+} from "discord.js"
 
 import { error, info } from "./logger.ts"
 
@@ -14,6 +22,7 @@ const showWelcome = async (client: Client | null, user: User, name: string): Pro
 
     await (channel as TextChannel)
       .send({
+        content: userMention(user.id),
         embeds: [
           new EmbedBuilder()
             .setColor("#78866b")
