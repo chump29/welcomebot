@@ -3,12 +3,12 @@ import { parse } from "path"
 import {
   type ChatInputCommandInteraction,
   MessageFlags,
+  PermissionFlagsBits,
   type RESTPostAPIChatInputApplicationCommandsJSONBody,
   SlashCommandBuilder,
   type SlashCommandUserOption
 } from "discord.js"
 
-import { checkRate } from "../../utils/checkRate.ts"
 import { error } from "../../utils/logger.ts"
 import { showWelcome } from "../../utils/showWelcome.ts"
 
@@ -20,6 +20,7 @@ const create = (): RESTPostAPIChatInputApplicationCommandsJSONBody => {
       (option: SlashCommandUserOption): SlashCommandUserOption =>
         option.setName("user").setDescription("User to welcome").setRequired(true)
     )
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .toJSON()
 }
 
@@ -27,10 +28,6 @@ const invoke = async (interaction: ChatInputCommandInteraction): Promise<void> =
   const user = interaction.options.getUser("user")
   if (!user) {
     throw new Error("Invalid user")
-  }
-
-  if (await checkRate(interaction, user)) {
-    return
   }
 
   await showWelcome(interaction.channel?.client ?? null, user, interaction.guild?.name as string)
