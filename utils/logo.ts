@@ -12,11 +12,15 @@ const logo = async (): Promise<void> => {
       port: PORT,
       fetch(request: Request): Response {
         const req: string = new URL(request.url).pathname
+        const welcome: string = Bun.env.WELCOME_IMAGE_URL ? new URL(Bun.env.WELCOME_IMAGE_URL).pathname : ""
         if (req === "/welcomebot.png") {
           return new Response(Bun.file(`${import.meta.dirname}/images/welcomebot.png`))
-        } else if (req === Bun.env.WELCOME_IMAGE_URL) {
-          return new Response(Bun.file(`${import.meta.dirname}/images/${Bun.env.WELCOME_IMAGE_URL}`))
-        }
+        } else if (welcome.length && req === welcome) {
+          return new Response(Bun.file(`${import.meta.dirname}/images/${welcome}`))
+        } else if (req === "/favicon.ico")
+          return new Response(null, {
+            status: 204
+          })
         return new Response("Not Found", {
           status: 404
         })
