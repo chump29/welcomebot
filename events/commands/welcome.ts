@@ -30,7 +30,11 @@ const invoke = async (interaction: ChatInputCommandInteraction): Promise<void> =
     throw new Error("Invalid user")
   }
 
-  await showWelcome(interaction.channel?.client ?? null, user, interaction.guild?.name as string)
+  if (!interaction.channel || !interaction.guild) {
+    throw new Error("Invalid channel/guild")
+  }
+
+  await showWelcome(interaction.channel.client, user, interaction.guild.name)
     .then(async (): Promise<void> => {
       await interaction
         .reply({
