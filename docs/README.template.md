@@ -4,9 +4,9 @@
 
 ---
 
-![Biome](https://img.shields.io/badge/Biome-^2.4.12-informational?style=plastic&logo=biome) &nbsp;
-![Bun](https://img.shields.io/badge/Bun-~1.3.12-informational?style=plastic&logo=bun) &nbsp;
-![discord.js](https://img.shields.io/badge/discord.js-^14.26.3-informational?style=plastic&logo=discord.js)
+![Biome](https://img.shields.io/badge/Biome-$_biome-informational?style=plastic&logo=biome) &nbsp;
+![Bun](https://img.shields.io/badge/Bun-$_bun-informational?style=plastic&logo=bun) &nbsp;
+![discord.js](https://img.shields.io/badge/discord.js-$_discord-informational?style=plastic&logo=discord.js)
 
 ![CodeQL](https://github.com/chump29/welcomebot/workflows/CodeQL/badge.svg) &nbsp;
 ![License](https://img.shields.io/github/license/chump29/welcomebot?style=plastic&color=blueviolet&label=License&logo=gplv3)

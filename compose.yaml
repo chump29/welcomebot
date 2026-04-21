@@ -12,6 +12,6 @@ services:
       - wud.display.name=WelcomeBot
       - homepage.group=Personal
       - homepage.name=WelcomeBot
-      - homepage.icon=https://welcomebot.postfmly.com/welcomebot.png
+      - homepage.icon=https://welcomebot.postfmly.com/welcomebot.webp
 
 networks: {}
