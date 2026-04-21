@@ -44,7 +44,7 @@ const invoke = async (interaction: ChatInputCommandInteraction): Promise<void> =
     .then(async (): Promise<void> => {
       await interaction.deleteReply()
     })
-    .catch((e: unknown) => {
+    .catch((e: unknown): void => {
       error(e)
       throw e
     })

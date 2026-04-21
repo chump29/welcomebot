@@ -44,7 +44,7 @@ const invoke = async (interaction: ChatInputCommandInteraction): Promise<void> =
           })
       ]
     })
-    .catch((e: unknown) => {
+    .catch((e: unknown): void => {
       error(e)
       throw e
     })

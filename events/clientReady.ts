@@ -11,8 +11,8 @@ const invoke = async (client: Client): Promise<void> => {
     throw new Error("Invalid client")
   }
 
-  const commands: string[] = await readdir(`${import.meta.dirname}/commands`).then((dir: string[]) => {
-    return dir.filter((file: string) => file.endsWith(".ts"))
+  const commands: string[] = await readdir(`${import.meta.dirname}/commands`).then((dir: string[]): string[] => {
+    return dir.filter((file: string): boolean => file.endsWith(".ts"))
   })
 
   const commandsArray: RESTPostAPIChatInputApplicationCommandsJSONBody[] = []
