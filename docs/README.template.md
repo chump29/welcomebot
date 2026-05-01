@@ -13,6 +13,12 @@
 
 ---
 
+### 🔗 Invite Link <!-- markdownlint-disable-line MD001 -->
+
+[Add WelcomeBot](https://discord.com/oauth2/authorize?client_id=1491949693910122546&permissions=19456&integration_type=0&scope=bot)
+
+---
+
 ### 🖥️ Discord <!-- markdownlint-disable-line MD001 -->
 
 #### Role Permissions:
