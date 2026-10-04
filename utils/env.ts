@@ -83,6 +83,7 @@ if (Bun.env.NODE_ENV === "test") {
 }
 
 const env = cleanEnv(Bun.env, {
+  ACTIVITY: str({ default: "Welcoming" }),
   CHANNEL_ID: idValidator({ testDefault: fakeId }),
   COLOR: colorValidator({ default: "#78866b" }),
   DEBUG: bool({ default: false, testDefault: true }),

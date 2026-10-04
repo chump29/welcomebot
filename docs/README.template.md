@@ -54,6 +54,7 @@
 
 | 📝 Description | 📌 Variable |  {...} Value   |
 |:--------------:|:-----------:|:--------------:|
+|    Activity    |  ACTIVITY   |   Welcoming    |
 |   Channel ID   | CHANNEL_ID  |     \<id>      |
 |  Embed Color   |    COLOR    |    #78866b     |
 |     Debug      |    DEBUG    | true/**false** |
