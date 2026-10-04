@@ -4,14 +4,21 @@
 
 ---
 
-![Biome](https://img.shields.io/badge/Biome-^2.4.15-informational?style=plastic&logo=biome) &nbsp;
-![Bun](https://img.shields.io/badge/Bun-~1.3.14-informational?style=plastic&logo=bun) &nbsp;
-![discord.js](https://img.shields.io/badge/discord.js-^14.26.4-informational?style=plastic&logo=discord.js)
+![Bun](https://img.shields.io/badge/Bun-1.4.2-informational?style=plastic&logo=bun) &nbsp;
+![discord.js](https://img.shields.io/badge/discord.js-^14.27.0-informational?style=plastic&logo=discord.js)
 
 ![CodeQL](https://github.com/chump29/welcomebot/workflows/CodeQL/badge.svg) &nbsp;
-![Coverage](https://img.shields.io/badge/Coverage-100%25-success?style=plastic&logo=jest)
+![Coverage](https://img.shields.io/badge/Coverage-81.46%25-success?style=plastic&logo=jest)
 
-![License](https://img.shields.io/github/license/chump29/welcomebot?style=plastic&color=blueviolet&label=License&logo=gplv3)
+![NO AI](https://img.shields.io/badge/NO-AI-orange?style=plastic "NO AI") &nbsp;
+![License](https://img.shields.io/github/license/chump29/welcomebot?style=plastic&color=blueviolet&label=License&logo=gplv3) &nbsp; <!-- markdownlint-disable MD013 -->
+![CVE Scan](https://img.shields.io/badge/CVE%20Scan-Pass-success?style=plastic&logo=owasp "CVE Scan")
+
+---
+
+### What it does: <!-- markdownlint-disable-line MD001 -->
+
+- Welcomes new member to server
 
 ---
 
@@ -35,66 +42,9 @@
 
 |   📋 Task    |    🔧 Command     | ⚙️ Permission |
 |:------------:|:-----------------:|:-------------:|
-|     Info     |      `/info`      | SendMessages  |
-|     Ping     |      `/ping`      | SendMessages  |
+|     Info     |      `/info`      |     None      |
+|     Ping     |      `/ping`      |     None      |
 | Send Welcome | `/welcome [user]` | Administrator |
-
----
-
-### 🛠️ Environment Management
-
-#### NPM ([Bun](https://github.com/oven-sh/bun "Bun") toolkit):
-
-| 📋 Task |  🔧 Command   |
-|:-------:|:-------------:|
-| Upgrade | `bun upgrade` |
-
----
-
-### 📦 Dependency Management
-
-#### Installation & Removal:
-
-|        📋 Task         |            🔧 Command (Full)             |           🔧 Command (Short)           |
-|:----------------------:|:----------------------------------------:|:--------------------------------------:|
-|      Install DEV       |              `bun install`               |                `bun i`                 |
-|      Install PROD      |        `bun install --production`        |               `bun i -p`               |
-|     Add dependency     |      `bun add [package][@version]`       |      `bun a [package][@version]`       |
-|   Add devDependency    | `bun add --save-dev [package][@version]` |     `bun a -d [package][@version]`     |
-| Add optionalDependency | `bun add --optional [package][@version]` | `bun a --optional [package][@version]` |
-|   Add peerDependency   |   `bun add --peer [package][@version]`   |   `bun a --peer [package][version]`    |
-|       Add Global       |  `bun add --global [package][@version]`  |     `bun a -g [package][@version]`     |
-|   Remove Dependency    |          `bun remove [package]`          |           `bun r [package]`            |
-
-#### Maintenance & Quality:
-
-|     📋 Task     |   🔧 Command (Full)    | 🔧 Command (Short)  |
-|:---------------:|:----------------------:|:-------------------:|
-|  Check Updates  |     `bun outdated`     |       &mdash;       |
-|   Update All    |      `bun update`      |       &mdash;       |
-| Update Specific | `bun update [package]` |       &mdash;       |
-| Security Audit  |      `bun audit`       |       &mdash;       |
-|  Package Info   |  `bun info [package]`  |       &mdash;       |
-|   Run Script    |   `bun run [script]`   |   `bun [script]`    |
-|      List       |       `bun list`       |       &mdash;       |
-|   List Extra    |    `bun list --all`    |       &mdash;       |
-|    Hierarchy    | `bun pm why [package]` | `bun why [package]` |
-
----
-
-### 🧪 Development
-
-#### Scripts:
-
-|    📋 Task     |  🔧 Command (Full)   | 🔧 Command (Short) |
-|:--------------:|:--------------------:|:------------------:|
-| Lint All (DEV) |    `bun run lint`    |     `bun lint`     |
-| Lint All (CI)  |  `bun run lint:ci`   |   `bun lint:ci`    |
-|   Lint Biome   | `bun run lint:biome` |  `bun lint:biome`  |
-|    Lint ENV    |  `bun run lint:env`  |   `bun lint:env`   |
-|    Run DEV     |    `bun run dev`     |     `bun dev`      |
-|    Run PROD    |    `bun run prod`    |     `bun prod`     |
-|      Test      |    `bun run test`    |      &mdash;       |
 
 ---
 
@@ -102,31 +52,29 @@
 
 #### Environment Variables:
 
-|   📝 Description   | 📌 Variable |  {...} Value   |
-|:------------------:|:-----------:|:--------------:|
-| Message Channel ID | CHANNEL_ID  |  [channel id]  |
-|       Debug        |  IS_DEBUG   | true/**false** |
-|      Logo URL      |  LOGO_URL   |     [url]      |
-|     Logo 2 URL     |  LOGO2_URL  |     [url]      |
-|      Bot Name      |    NAME     |   WelcomeBot   |
-|     Bot Token      |    TOKEN    |    [token]     |
+| 📝 Description | 📌 Variable |  {...} Value   |
+|:--------------:|:-----------:|:--------------:|
+|   Channel ID   | CHANNEL_ID  |     \<id>      |
+|  Embed Color   |    COLOR    |    #78866b     |
+|     Debug      |    DEBUG    | true/**false** |
+|    Bot Name    |    NAME     |   WelcomeBot   |
+|   Bot Token    |    TOKEN    |    \<token>    |
 
 ##### From `@postfmly/logoserver`:
 
 |  📝 Description   | 📌 Variable |    {...} Value    |
 |:-----------------:|:-----------:|:-----------------:|
-|     IPv4/IPv6     |  LOGO_IPv6  |  true/**false**   |
-|     Logo Name     |  LOGO_NAME  |    [filename]     |
-|  Logo Local Path  |  LOGO_PATH  |      [path]       |
+|     Logo Name     |  LOGO_NAME  |  welcomebot.webp  |
+|  Logo Local Path  |  LOGO_PATH  |  ./utils/images   |
 |       Port        |  LOGO_PORT  | **Random**/[port] |
-|    Logo 2 Name    | LOGO2_NAME  |    [filename]     |
-| Logo 2 Local Path | LOGO2_PATH  |      [path]       |
+|     Logo URL      |  LOGO_URL   |      \<url>       |
+|    Logo 2 Name    | LOGO2_NAME  |   welcome.webp    |
+| Logo 2 Local Path | LOGO2_PATH  |  ./utils/images   |
+|    Logo 2 URL     |  LOGO2_URL  |      \<url>       |
 
 ##### From `@postfmly/checkrate`:
 
-| 📝 Description | 📌 Variable | {...} Value |
-|:--------------:|:-----------:|:-----------:|
-|   Rate Limit   |    RATE     |     1s      |
+###### *NOTE: Rate limited to 1 request per 1 second*
 
 #### Deployment:
 
