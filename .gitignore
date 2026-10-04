@@ -1,4 +1,4 @@
 .env.local
-.vscode/
+.vscode
 coverage/
 node_modules/
