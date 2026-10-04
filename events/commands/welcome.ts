@@ -18,7 +18,6 @@ import {
   userMention
 } from "discord.js"
 
-import { version } from "../../package.json" with { type: "json" }
 import { env } from "../../utils/env.ts"
 
 const create = (): RESTPostAPIChatInputApplicationCommandsJSONBody =>
@@ -57,10 +56,6 @@ const showWelcome = async (channel: TextChannel, user: User, name: string): Prom
             value: user.id
           }
         )
-        .setFooter({
-          iconURL: env.LOGO_URL,
-          text: `${env.NAME} v${version}`
-        })
         .setTimestamp()
         .toJSON()
     ]
@@ -92,7 +87,7 @@ const invoke = async (interaction: ChatInputCommandInteraction): Promise<void> =
 
   await showWelcome(channel as TextChannel, user, interaction.guild.name)
 
-  await interaction.editReply({ content: `-# > ✨ Welcomed ${user.username} to ${interaction.guild.name}` })
+  await interaction.editReply({ content: `-# > ✨ Welcomed \`${user.username}\` to ${interaction.guild.name}` })
 }
 
 export { create, invoke, showWelcome }
