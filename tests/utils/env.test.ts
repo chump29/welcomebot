@@ -6,6 +6,12 @@ import { expectTypeOf } from "expect-type"
 import { env } from "../../utils/env.ts"
 
 describe("env", (): void => {
+  test("ACTIVITY", (): void => {
+    expectTypeOf(env.ACTIVITY).toEqualTypeOf<string>()
+
+    expect(env.ACTIVITY.length).toBeGreaterThan(0)
+  })
+
   test("CHANNEL_ID", (): void => {
     expectTypeOf(env.CHANNEL_ID).toEqualTypeOf<string>()
 
