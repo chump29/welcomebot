@@ -1,5 +1,6 @@
 import { parse } from "node:path"
 
+import { error } from "@postfmly/logger"
 import { type Nullable } from "@postfmly/types"
 
 import {
@@ -19,6 +20,8 @@ import {
 } from "discord.js"
 
 import { env } from "../../utils/env.ts"
+
+const WRONG: string = "-# > ❌ Something went wrong"
 
 const create = (): RESTPostAPIChatInputApplicationCommandsJSONBody =>
   new SlashCommandBuilder()
@@ -67,20 +70,26 @@ const invoke = async (interaction: ChatInputCommandInteraction): Promise<void> =
 
   const user: Nullable<User> = interaction.options.getUser("user")
   if (!user) {
-    await interaction.editReply({ content: "❌ Could not get user" })
+    await interaction.editReply({ content: WRONG })
+
+    error("❌ Could not get user")
 
     return
   }
 
   if (!interaction.guild) {
-    await interaction.editReply({ content: "❌ Could not get guild" })
+    await interaction.editReply({ content: WRONG })
+
+    error("❌ Could not get guild")
 
     return
   }
 
   const channel: Nullable<Channel> = await interaction.guild.channels.fetch(env.CHANNEL_ID)
   if (!channel) {
-    await interaction.editReply({ content: "❌ Could not get channel" })
+    await interaction.editReply({ content: WRONG })
+
+    error("❌ Could not get channel")
 
     return
   }
