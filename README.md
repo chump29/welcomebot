@@ -8,7 +8,7 @@
 ![discord.js](https://img.shields.io/badge/discord.js-^14.27.0-informational?style=plastic&logo=discord.js)
 
 ![CodeQL](https://github.com/chump29/welcomebot/workflows/CodeQL/badge.svg) &nbsp;
-![Coverage](https://img.shields.io/badge/Coverage-98.73%25-success?style=plastic&logo=jest)
+![Coverage](https://img.shields.io/badge/Coverage-82.5%25-success?style=plastic&logo=jest)
 
 ![NO AI](https://img.shields.io/badge/NO-AI-orange?style=plastic "NO AI") &nbsp;
 ![License](https://img.shields.io/github/license/chump29/welcomebot?style=plastic&color=blueviolet&label=License&logo=gplv3) &nbsp; <!-- markdownlint-disable MD013 -->
