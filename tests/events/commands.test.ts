@@ -19,8 +19,6 @@ import { match } from "ts-pattern"
 import { author, version } from "../../package.json" with { type: "json" }
 import { env, MAX_ID_LEN, MIN_ID_LEN } from "../../utils/env.ts"
 
-const TIMEOUT: number = 10_000
-
 interface ICommandFile {
   create: () => RESTPostAPIChatInputApplicationCommandsJSONBody
   invoke: (interaction: ChatInputCommandInteraction) => Promise<void>
@@ -49,65 +47,61 @@ await Promise.all(
         expect(c.contexts ?? []).not.toBeEmpty()
       })
 
-      test(
-        "invoke",
-        async (): Promise<void> => {
-          const user: User = {
-            displayAvatarURL: jest.fn().mockReturnValue(env.LOGO_URL),
-            displayName: fake.internet.displayName(),
-            id: fake.helpers.fromRegExp(`[0-9]{${MIN_ID_LEN},${MAX_ID_LEN}}`),
-            username: fake.internet.username()
-          } as unknown as User
+      test("invoke", async (): Promise<void> => {
+        const user: User = {
+          displayAvatarURL: jest.fn().mockReturnValue(env.LOGO_URL),
+          displayName: fake.internet.displayName(),
+          id: fake.helpers.fromRegExp(`[0-9]{${MIN_ID_LEN},${MAX_ID_LEN}}`),
+          username: fake.internet.username()
+        } as unknown as User
 
-          const interaction: ChatInputCommandInteraction = {
-            createdTimestamp: fake.date.past().getTime(),
-            deferReply: jest.fn().mockResolvedValue(undefined),
-            editReply: jest.fn().mockResolvedValue(undefined),
-            guild: {
-              channels: {
-                fetch: jest.fn().mockResolvedValue({
-                  send: jest.fn().mockResolvedValue(undefined)
-                } as unknown as TextChannel)
-              } as unknown as GuildChannelManager,
-              name: fake.lorem.word()
-            } as Guild,
-            user,
-            options: {
-              getUser: jest.fn().mockReturnValue(user)
-            }
-          } as unknown as ChatInputCommandInteraction
-
-          expect(await invoke(interaction)).toBeUndefined()
-
-          expect(interaction.deferReply).toHaveBeenCalledTimes(1)
-          expect(interaction.editReply).toHaveBeenCalledTimes(1)
-
-          const mockEditReply = interaction.editReply as ReturnType<typeof jest.fn>
-          const firstCallArgs = mockEditReply.mock.calls
-          const payload = firstCallArgs[0]?.[0]
-          if (!payload) {
-            throw new Error("Payload not found")
+        const interaction: ChatInputCommandInteraction = {
+          createdTimestamp: fake.date.past().getTime(),
+          deferReply: jest.fn().mockResolvedValue(undefined),
+          editReply: jest.fn().mockResolvedValue(undefined),
+          guild: {
+            channels: {
+              fetch: jest.fn().mockResolvedValue({
+                send: jest.fn().mockResolvedValue(undefined)
+              } as unknown as TextChannel)
+            } as unknown as GuildChannelManager,
+            name: fake.lorem.word()
+          } as Guild,
+          user,
+          options: {
+            getUser: jest.fn().mockReturnValue(user)
           }
+        } as unknown as ChatInputCommandInteraction
 
-          match<string, void>(name)
-            .with("info", (): void => {
-              const data = payload.embeds?.[0].data
+        expect(await invoke(interaction)).toBeUndefined()
 
-              expect(decimalToHex(data.color)).toBe(env.COLOR)
-              expect(data.author.icon_url).toBe(env.LOGO_URL)
-              expect(data.author.name).toBe(`${env.NAME} v${version}`)
-              expect(data.thumbnail.url).toBe(env.LOGO_URL)
-              expect(data.description).not.toBeEmpty()
-              expect(data.footer.text).toEndWith(author.name)
-            })
-            .with("ping", (): void => expect(payload.content).toInclude("Pong"))
-            .with("welcome", (): void => expect(payload.content).toInclude("Welcomed"))
-            .otherwise((): never => {
-              throw new Error(`Payload tests not found for /${name}`)
-            })
-        },
-        TIMEOUT
-      )
+        expect(interaction.deferReply).toHaveBeenCalledTimes(1)
+        expect(interaction.editReply).toHaveBeenCalledTimes(1)
+
+        const mockEditReply = interaction.editReply as ReturnType<typeof jest.fn>
+        const firstCallArgs = mockEditReply.mock.calls
+        const payload = firstCallArgs[0]?.[0]
+        if (!payload) {
+          throw new Error("Payload not found")
+        }
+
+        match<string, void>(name)
+          .with("info", (): void => {
+            const data = payload.embeds?.[0].data
+
+            expect(decimalToHex(data.color)).toBe(env.COLOR)
+            expect(data.author.icon_url).toBe(env.LOGO_URL)
+            expect(data.author.name).toBe(`${env.NAME} v${version}`)
+            expect(data.thumbnail.url).toBe(env.LOGO_URL)
+            expect(data.description).not.toBeEmpty()
+            expect(data.footer.text).toEndWith(author.name)
+          })
+          .with("ping", (): void => expect(payload.content).toInclude("Pong"))
+          .with("welcome", (): void => expect(payload.content).toInclude("Welcomed"))
+          .otherwise((): never => {
+            throw new Error(`Payload tests not found for /${name}`)
+          })
+      })
     })
   })
 )
