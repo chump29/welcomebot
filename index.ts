@@ -2,9 +2,10 @@ import { error, info } from "@postfmly/logger"
 
 import { Client } from "./utils/client.ts"
 import { env } from "./utils/env.ts"
+import { Welcome } from "./utils/welcome.ts"
 
 try {
-  await Client.init()
+  await Welcome.init(await Client.init())
 
   info(`🟢 ${env.ACTIVITY}...`)
 } catch (e: unknown) {

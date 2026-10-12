@@ -1,27 +1,15 @@
 import { parse } from "node:path"
 
-import { error } from "@postfmly/logger"
-import { type Nullable } from "@postfmly/types"
-
 import {
-  type Channel,
   type ChatInputCommandInteraction,
-  EmbedBuilder,
-  type HexColorString,
   InteractionContextType,
-  MessageFlags,
   PermissionFlagsBits,
   type RESTPostAPIChatInputApplicationCommandsJSONBody,
   SlashCommandBuilder,
-  type SlashCommandUserOption,
-  type TextChannel,
-  type User,
-  userMention
+  type SlashCommandUserOption
 } from "discord.js"
 
-import { env } from "../../utils/env.ts"
-
-const WRONG: string = "-# > ❌ Something went wrong"
+import { Welcome } from "../../utils/welcome.ts"
 
 const create = (): RESTPostAPIChatInputApplicationCommandsJSONBody =>
   new SlashCommandBuilder()
@@ -35,68 +23,8 @@ const create = (): RESTPostAPIChatInputApplicationCommandsJSONBody =>
     .setContexts(InteractionContextType.Guild)
     .toJSON()
 
-const showWelcome = async (channel: TextChannel, user: User, name: string): Promise<void> => {
-  await channel.send({
-    content: userMention(user.id),
-    embeds: [
-      new EmbedBuilder()
-        .setColor(env.COLOR as HexColorString)
-        .setAuthor({
-          iconURL: user.displayAvatarURL(),
-          name: user.displayName
-        })
-        .setDescription(`# ✨ *Welcome to ${name}!* ✨`)
-        .setImage(env.LOGO2_URL)
-        .addFields(
-          {
-            inline: true,
-            name: "Username:",
-            value: user.username
-          },
-          {
-            inline: true,
-            name: "User ID:",
-            value: user.id
-          }
-        )
-        .setTimestamp()
-        .toJSON()
-    ]
-  })
-}
-
 const invoke = async (interaction: ChatInputCommandInteraction): Promise<void> => {
-  await interaction.deferReply({ flags: MessageFlags.Ephemeral })
-
-  const user: Nullable<User> = interaction.options.getUser("user")
-  if (!user) {
-    await interaction.editReply({ content: WRONG })
-
-    error("❌ Could not get user")
-
-    return
-  }
-
-  if (!interaction.guild) {
-    await interaction.editReply({ content: WRONG })
-
-    error("❌ Could not get guild")
-
-    return
-  }
-
-  const channel: Nullable<Channel> = await interaction.guild.channels.fetch(env.CHANNEL_ID)
-  if (!channel) {
-    await interaction.editReply({ content: WRONG })
-
-    error("❌ Could not get channel")
-
-    return
-  }
-
-  await showWelcome(channel as TextChannel, user, interaction.guild.name)
-
-  await interaction.editReply({ content: `-# > ✨ Welcomed \`${user.username}\` to ${interaction.guild.name}` })
+  await Welcome.welcome(interaction)
 }
 
-export { create, invoke, showWelcome }
+export { create, invoke }

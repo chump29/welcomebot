@@ -1,14 +1,16 @@
 import { readdir } from "node:fs/promises"
 import { default as path } from "node:path"
 
-import { describe, expect, jest, test } from "bun:test"
+import { beforeAll, describe, expect, jest, spyOn, test } from "bun:test"
 
 import { type Optional } from "@postfmly/types"
 
 import { fakerEN_US as fake } from "@faker-js/faker"
 import {
   type APIEmbed,
+  type ChannelManager,
   type ChatInputCommandInteraction,
+  type Client,
   EmbedBuilder,
   type Guild,
   type GuildChannelManager,
@@ -20,6 +22,7 @@ import { match } from "ts-pattern"
 
 import { author, version } from "../../package.json" with { type: "json" }
 import { env, MAX_ID_LEN, MIN_ID_LEN } from "../../utils/env.ts"
+import { Welcome } from "../../utils/welcome.ts"
 
 interface ICommandFile {
   create: () => RESTPostAPIChatInputApplicationCommandsJSONBody
@@ -33,6 +36,18 @@ const decimalToHex = (c: Optional<number>): string => (c ? `#${c.toString(HEX_BA
 const dir: string = "events/commands"
 
 const commands: string[] = (await readdir(dir)).filter((file: string): boolean => file.endsWith(".ts"))
+
+beforeAll(async (): Promise<void> => {
+  spyOn(console, "info").mockImplementation((): void => undefined) // suppress
+
+  await Welcome.init({
+    channels: {
+      fetch: jest.fn().mockResolvedValue({
+        send: jest.fn().mockResolvedValue(undefined)
+      } as unknown as TextChannel)
+    } as unknown as ChannelManager
+  } as Client)
+})
 
 await Promise.all(
   commands.map(async (command: string): Promise<void> => {
