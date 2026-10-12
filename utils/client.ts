@@ -83,17 +83,6 @@ class WelcomeBotClient implements IWelcomeBotClient {
         }
       })
 
-    const channel: Nullable<Channel> = await this.CLIENT.channels.fetch(env.CHANNEL_ID)
-    if (!channel) {
-      throw new Error("Channel not found")
-    }
-
-    this.CHANNEL = channel as TextChannel
-
-    this.CLIENT.on(Events.GuildMemberAdd, async (member: GuildMember): Promise<void> => {
-      await showWelcome(this.CHANNEL, member.user, member.guild.name)
-    })
-
     for (const event of ["SIGINT", "SIGTERM"]) {
       process.on(event, (e: string): void => {
         this.shutdown(e).catch((err: unknown) => {
@@ -107,6 +96,17 @@ class WelcomeBotClient implements IWelcomeBotClient {
     await loadCommands(this.CLIENT)
 
     await this.login()
+
+    const channel: Nullable<Channel> = await this.CLIENT.channels.fetch(env.CHANNEL_ID)
+    if (!channel) {
+      throw new Error("Channel not found")
+    }
+
+    this.CHANNEL = channel as TextChannel
+
+    this.CLIENT.on(Events.GuildMemberAdd, async (member: GuildMember): Promise<void> => {
+      await showWelcome(this.CHANNEL, member.user, member.guild.name)
+    })
 
     this.isShutdown = false
   }
