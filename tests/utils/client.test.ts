@@ -3,7 +3,7 @@ import { default as process } from "node:process"
 import { beforeAll, describe, expect, jest, spyOn, test } from "bun:test"
 
 import { simpleFaker as fake } from "@faker-js/faker"
-import { type ClientUser, type Client as DiscordClient } from "discord.js"
+import { type Channel, type ChannelManager, type ClientUser, type Client as DiscordClient } from "discord.js"
 
 import { Client } from "../../utils/client.ts"
 import { env } from "../../utils/env.ts"
@@ -18,6 +18,9 @@ beforeAll(async (): Promise<void> => {
   exitSpy = spyOn(process, "exit").mockImplementation((): never => undefined as never)
 
   await Client.init({
+    channels: {
+      fetch: jest.fn().mockResolvedValue({} as Channel)
+    } as unknown as ChannelManager,
     destroy: jest.fn().mockResolvedValue(undefined),
     login: jest.fn().mockResolvedValue(undefined),
     on: jest.fn(),

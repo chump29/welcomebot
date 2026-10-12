@@ -24,11 +24,12 @@ interface IWelcomeBotClient {
 }
 
 class WelcomeBotClient implements IWelcomeBotClient {
-  private CLIENT: Nullable<DiscordClient> = null
+  private CLIENT!: DiscordClient
+  private CHANNEL!: TextChannel
 
-  private LOGO_SERVER: Nullable<LogoServer> = null
+  private LOGO_SERVER!: LogoServer
 
-  private isShutdown: boolean = false
+  private isShutdown: boolean = true
 
   async shutdown(event?: string): Promise<void> {
     if (this.isShutdown) {
@@ -41,20 +42,16 @@ class WelcomeBotClient implements IWelcomeBotClient {
 
     info("🔴 Shutting down...")
 
+    await this.CLIENT.destroy()
+
+    await this.LOGO_SERVER.stop()
+
     this.isShutdown = true
-
-    await this.CLIENT?.destroy()
-
-    await this.LOGO_SERVER?.stop()
 
     process.exit(0)
   }
 
   private async login(): Promise<void> {
-    if (!this.CLIENT) {
-      throw new Error("Invalid CLIENT")
-    }
-
     await this.CLIENT.login(env.TOKEN)
 
     if (this.CLIENT.user && env.DEBUG) {
@@ -86,13 +83,15 @@ class WelcomeBotClient implements IWelcomeBotClient {
         }
       })
 
-    this.CLIENT.on(Events.GuildMemberAdd, async (member: GuildMember): Promise<void> => {
-      const channel: Nullable<Channel> = await member.guild.channels.fetch(env.CHANNEL_ID)
-      if (!channel) {
-        throw new Error("Channel not found")
-      }
+    const channel: Nullable<Channel> = await this.CLIENT.channels.fetch(env.CHANNEL_ID)
+    if (!channel) {
+      throw new Error("Channel not found")
+    }
 
-      await showWelcome(channel as TextChannel, member.user, member.guild.name)
+    this.CHANNEL = channel as TextChannel
+
+    this.CLIENT.on(Events.GuildMemberAdd, async (member: GuildMember): Promise<void> => {
+      await showWelcome(this.CHANNEL, member.user, member.guild.name)
     })
 
     for (const event of ["SIGINT", "SIGTERM"]) {
@@ -108,6 +107,8 @@ class WelcomeBotClient implements IWelcomeBotClient {
     await loadCommands(this.CLIENT)
 
     await this.login()
+
+    this.isShutdown = false
   }
 }
 
