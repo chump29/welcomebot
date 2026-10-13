@@ -21,8 +21,8 @@ beforeAll(async (): Promise<void> => {
     channels: {
       fetch: jest.fn().mockResolvedValue({} as Channel)
     } as unknown as ChannelManager,
-    destroy: jest.fn().mockResolvedValue(undefined),
-    login: jest.fn().mockResolvedValue(undefined),
+    destroy: jest.fn(),
+    login: jest.fn(),
     on: jest.fn(),
     once: jest.fn(),
     user: {
