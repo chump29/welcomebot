@@ -2,10 +2,10 @@ import { type Nullable } from "@postfmly/types"
 
 import {
   type Channel,
+  ChannelType,
   type ChatInputCommandInteraction,
   type Client,
   EmbedBuilder,
-  type HexColorString,
   MessageFlags,
   type TextChannel,
   type User,
@@ -25,11 +25,11 @@ class WelcomeBot implements IWelcomeBot {
 
   async init(client: Client): Promise<void> {
     const channel: Nullable<Channel> = await client.channels.fetch(env.CHANNEL_ID)
-    if (!channel) {
+    if (channel?.type !== ChannelType.GuildText) {
       throw new Error("Could not get channel")
     }
 
-    this.CHANNEL = channel as TextChannel
+    this.CHANNEL = channel
   }
 
   async showWelcome(user: User): Promise<void> {
@@ -37,7 +37,7 @@ class WelcomeBot implements IWelcomeBot {
       content: userMention(user.id),
       embeds: [
         new EmbedBuilder()
-          .setColor(env.COLOR as HexColorString)
+          .setColor(env.COLOR)
           .setAuthor({
             iconURL: user.displayAvatarURL(),
             name: user.displayName
@@ -65,14 +65,12 @@ class WelcomeBot implements IWelcomeBot {
   async welcome(interaction: ChatInputCommandInteraction): Promise<void> {
     await interaction.deferReply({ flags: MessageFlags.Ephemeral })
 
-    const user: User = interaction.options.getUser("user") as User
-
+    // biome-ignore lint/style/noNonNullAssertion: required
+    const user = interaction.options.getUser("user")!
     await this.showWelcome(user)
 
     await interaction.editReply({ content: `-# > ✨ Welcomed \`${user.displayName}\` to ${env.NAME}` })
   }
 }
 
-const Welcome: IWelcomeBot = new WelcomeBot()
-
-export { Welcome }
+export const Welcome = new WelcomeBot()

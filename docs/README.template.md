@@ -1,4 +1,4 @@
-# ![WelcomeBot](./utils/images/welcomebot.webp) WelcomeBot
+# ![WelcomeBot](./utils/images/welcomebot.webp "WelcomeBot") WelcomeBot
 
 > - WelcomeBot for Discord
 
@@ -33,7 +33,7 @@
 #### Role Permissions:
 
 | ⚙️ Permission |
-|:-------------:|
+| :-----------: |
 |  ViewChannel  |
 | SendMessages  |
 |  EmbedLinks   |
@@ -41,7 +41,7 @@
 #### Commands:
 
 |   📋 Task    |    🔧 Command     | ⚙️ Permission |
-|:------------:|:-----------------:|:-------------:|
+| :----------: | :---------------: | :-----------: |
 |     Info     |      `/info`      |     None      |
 |     Ping     |      `/ping`      |     None      |
 | Send Welcome | `/welcome [user]` | Administrator |
@@ -53,7 +53,7 @@
 #### Environment Variables:
 
 |     📝 Description      | 📌 Variable |  {...} Value   |
-|:-----------------------:|:-----------:|:--------------:|
+| :---------------------: | :---------: | :------------: |
 |        Activity         |  ACTIVITY   |   Welcoming    |
 |       Channel ID        | CHANNEL_ID  |     \<id>      |
 | Embed Color<sup>1</sup> |    COLOR    |    #78866b     |
@@ -66,7 +66,7 @@
 ##### From `@postfmly/logoserver`:
 
 |  📝 Description   | 📌 Variable |    {...} Value    |
-|:-----------------:|:-----------:|:-----------------:|
+| :---------------: | :---------: | :---------------: |
 |     Logo Name     |  LOGO_NAME  |  welcomebot.webp  |
 |  Logo Local Path  |  LOGO_PATH  |  ./utils/images   |
 |       Port        |  LOGO_PORT  | **Random**/[port] |
@@ -77,12 +77,12 @@
 
 ##### From `@postfmly/checkrate`:
 
-###### *NOTE: Rate limited to 1 request per 1 second*
+###### _NOTE: Rate limited to 1 request per 1 second_
 
 #### Deployment:
 
 |  📜 Script  |  🔧 Command   |
-|:-----------:|:-------------:|
+| :---------: | :-----------: |
 |    Full     | `./build.sh`  |
 | Docker Only | `./docker.sh` |
 
