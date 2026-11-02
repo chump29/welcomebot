@@ -54,7 +54,9 @@ class WelcomeBotClient implements IWelcomeBotClient {
       DEBUG: env.DEBUG,
       LOGO_NAME: env.LOGO_NAME,
       LOGO_PATH: env.LOGO_PATH,
-      LOGO_PORT: env.LOGO_PORT
+      LOGO_PORT: env.LOGO_PORT,
+      LOGO2_NAME: env.LOGO2_NAME,
+      LOGO2_PATH: env.LOGO2_PATH
     } satisfies ILogoServerConfig)
 
     await this.LOGO_SERVER.start()
@@ -88,7 +90,7 @@ class WelcomeBotClient implements IWelcomeBotClient {
     await this.login()
 
     this.CLIENT.on(Events.GuildMemberAdd, async (member: GuildMember): Promise<void> => {
-      await Welcome.showWelcome(member.user)
+      await Welcome.showWelcome(member.user, member.guild.name)
     })
 
     this.isShutdown = false

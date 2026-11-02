@@ -16,7 +16,7 @@ import { env } from "./env.ts"
 
 interface IWelcomeBot {
   init: (client: Client) => Promise<void>
-  showWelcome: (user: User) => Promise<void>
+  showWelcome: (user: User, name: string) => Promise<void>
   welcome: (interaction: ChatInputCommandInteraction) => Promise<void>
 }
 
@@ -32,7 +32,7 @@ class WelcomeBot implements IWelcomeBot {
     this.CHANNEL = channel
   }
 
-  async showWelcome(user: User): Promise<void> {
+  async showWelcome(user: User, name: string): Promise<void> {
     await this.CHANNEL.send({
       content: userMention(user.id),
       embeds: [
@@ -42,7 +42,7 @@ class WelcomeBot implements IWelcomeBot {
             iconURL: user.displayAvatarURL(),
             name: user.displayName
           })
-          .setDescription(`# ✨ *Welcome to ${env.NAME}!* ✨`)
+          .setDescription(`# ✨ *Welcome to ${name}!* ✨`)
           .setImage(env.LOGO2_URL)
           .addFields(
             {
@@ -67,7 +67,11 @@ class WelcomeBot implements IWelcomeBot {
 
     // biome-ignore lint/style/noNonNullAssertion: required
     const user = interaction.options.getUser("user")!
-    await this.showWelcome(user)
+
+    // biome-ignore lint/style/noNonNullAssertion: executed from server
+    const { name } = interaction.guild!
+
+    await this.showWelcome(user, name)
 
     await interaction.editReply({ content: `-# > ✨ Welcomed \`${user.displayName}\` to ${env.NAME}` })
   }
