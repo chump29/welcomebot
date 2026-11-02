@@ -73,7 +73,7 @@ class WelcomeBot implements IWelcomeBot {
 
     await this.showWelcome(user, name)
 
-    await interaction.editReply({ content: `-# > ✨ Welcomed \`${user.displayName}\` to ${env.NAME}` })
+    await interaction.editReply({ content: `-# > ✨ Welcomed \`${user.displayName}\` to ${name}` })
   }
 }
 
