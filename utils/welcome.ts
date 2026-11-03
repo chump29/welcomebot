@@ -42,22 +42,20 @@ class WelcomeBot implements IWelcomeBot {
             iconURL: user.displayAvatarURL(),
             name: user.displayName
           })
-          .setDescription(`# ✨ *Welcome to ${name}!* ✨`)
-          .setImage(env.LOGO2_URL)
+          .setTitle(`✨ Welcome to ${name}! ✨`)
           .addFields(
             {
               inline: true,
-              name: "Username:",
-              value: user.username
+              name: "👤 USERNAME",
+              value: `\`${user.username}\``
             },
             {
               inline: true,
-              name: "User ID:",
-              value: user.id
+              name: "🪪 USER ID",
+              value: `\`${user.id}\``
             }
           )
           .setTimestamp()
-          .toJSON()
       ]
     })
   }

@@ -8,7 +8,6 @@ services:
     environment:
       - LOGO_PORT=8002
       - LOGO_URL=https://welcomebot.postfmly.us/welcomebot.webp
-      - LOGO2_URL=https://welcomebot.postfmly.us/welcome.webp
       - TZ=America/Chicago
     env_file: .env
     labels:

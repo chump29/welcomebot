@@ -56,24 +56,6 @@ describe("env", (): void => {
     expect(env.LOGO_URL.length).toBeGreaterThan(0)
   })
 
-  test("LOGO2_NAME", (): void => {
-    expect(env.LOGO2_NAME).toBeString()
-
-    expect(env.LOGO2_NAME).toBe("welcome.webp")
-  })
-
-  test("LOGO2_PATH", (): void => {
-    expect(env.LOGO_PATH).toBeString()
-
-    expect(env.LOGO_PATH).toBe("./utils/images")
-  })
-
-  test("LOGO2_URL", (): void => {
-    expect(env.LOGO_URL).toBeString()
-
-    expect(env.LOGO_URL.length).toBeGreaterThan(0)
-  })
-
   test("NAME", (): void => {
     expect(env.NAME).toBeString()
 

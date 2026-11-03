@@ -54,9 +54,7 @@ class WelcomeBotClient implements IWelcomeBotClient {
       DEBUG: env.DEBUG,
       LOGO_NAME: env.LOGO_NAME,
       LOGO_PATH: env.LOGO_PATH,
-      LOGO_PORT: env.LOGO_PORT,
-      LOGO2_NAME: env.LOGO2_NAME,
-      LOGO2_PATH: env.LOGO2_PATH
+      LOGO_PORT: env.LOGO_PORT
     } satisfies ILogoServerConfig)
 
     await this.LOGO_SERVER.start()

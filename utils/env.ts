@@ -101,9 +101,6 @@ const env = cleanEnv(Bun.env, {
   LOGO_PATH: str({ default: "./utils/images" }),
   LOGO_PORT: portValidator({ default: "random" }),
   LOGO_URL: url({ testDefault: fakeURL }),
-  LOGO2_NAME: str({ default: "welcome.webp" }),
-  LOGO2_PATH: str({ default: "./utils/images" }),
-  LOGO2_URL: url({ testDefault: fakeURL }),
   NAME: str({ default: "WelcomeBot" }),
   TEST_FULL: bool({ default: false }),
   TOKEN: tokenValidator({ testDefault: fakeToken })
