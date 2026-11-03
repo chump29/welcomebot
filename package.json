@@ -46,7 +46,7 @@
   },
   "lint-staged": {
     "*": "bun run --bun cspell --dot --no-must-find-files",
-    "*.{json,ts}": "bun run --bun biome ci --no-errors-on-unmatched --error-on-warnings"
+    "*.{json,md,ts,yaml}": "bun run --bun biome ci --no-errors-on-unmatched --error-on-warnings"
   },
   "dependencies": {
     "@postfmly/checkrate": "^2.0.13",
